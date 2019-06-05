@@ -1,0 +1,49 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="form-component">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <div class="form">
+      <input type="text" id="username">
+      <input type="password" id="password">
+      <button on-click="submit">Button</button>
+    </div>
+  </template>
+
+  <script>
+    /**
+     * `form-component`
+     * 
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class FormComponent extends Polymer.Element {
+      static get is() { return 'form-component'; }
+      static get properties() {
+        return {
+          username: {
+            type: String,
+            value: ''
+          },
+          password: {
+            type: String,
+            value: ''
+          }
+        };
+      }
+      submit(){
+        const username = this.shadowRoot.querySelector('#username').value;
+        const password = this.shadowRoot.querySelector('#password').value;
+        this.dispatchEvent(new CustomEvent('request-login', {composed: false, bubble: false, detail: {username, password}}));
+      }
+    }
+
+    window.customElements.define(FormComponent.is, FormComponent);
+  </script>
+</dom-module>
